@@ -1,0 +1,45 @@
+@import "~asha/_.less";
+
+.inu-category{
+    .tree{
+        margin-left: 16px;
+        font-size: 14px;
+        >.item{
+            >.title{
+                border-bottom: 1px solid #ccc;
+                line-height: 20px;
+                padding-left: 20px;
+                .magic-color(#fff);
+                >.icon{
+                    display: none;
+                    width: 8px;
+                    margin-right: 6px;
+                    .transition;
+                }
+            }
+            &.children{
+                >.title{
+                    padding-left: 6px;
+                    >.icon{
+                        display: inline-block;
+                    }
+                }
+            }
+            &.active{
+                >.title{
+                    .magic-color();
+                }
+            }
+            &.open{
+                >.title{
+                    >.icon{
+                        .transform(~"rotate(90deg)");
+                    }
+                }
+            }
+        }
+    }
+    >.tree{
+        margin-left: 0;
+    }
+}
