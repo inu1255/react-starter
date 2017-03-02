@@ -1,0 +1,98 @@
+@import (reference) "~asha/_.less";
+
+.inu-input-outline{
+    padding: 18px;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+    font-size: 14px;
+    text-align: left;
+    &.sline{
+        .sline(18px);
+    }
+    &.none{
+        border-bottom: none;
+    }
+    >.title{
+        float: left;
+        width: 88px;
+        height: 20px;
+        line-height: 20px;
+    }
+    &.left>.input>.show{
+        text-align: left;
+        color: #000;
+    }
+    >input,>.input{
+        border: none;
+        width: calc(~"100% - 88px");
+        height: 20px;
+        padding: 2px 0;
+        color: #444;
+        float: left;
+        background: transparent;
+        >div{
+            min-height: 20px;
+        }
+        >.show{
+            margin-right: 15px;
+            line-height: 20px;
+            margin-top: -2px;
+        }
+        >select{
+            .appearance();
+            position: absolute;
+            left: 106px;
+            width: 80%;
+            width: ~"calc(100% - 124px)";
+            border:none;
+            margin: -18px 0;
+            padding: 18px 0;
+            text-align: right;
+            opacity: 0;
+            z-index: 12;
+        }
+        >icon{
+            position: absolute;
+            right: 4px;
+            color: #ccc;
+            line-height: 20px;
+            width: 36px;
+            text-align: center;
+        }
+    }
+    >.clear{
+        display: none;
+        position: absolute;
+        right: 4px;
+        line-height: 57px;
+        width: 36px;
+        text-align: center;
+        top: 0;
+        font-size: 24px;
+        color: #777;
+    }
+    >input~.clear{
+        display: block;
+    }
+    >.tail{
+        position: absolute;
+        left: 106px;
+        top: 15.5px;
+        z-index: -1;
+        >.value{
+            color: transparent;
+        }
+        >.tail{
+            color: #74CACF;
+            margin-left: 2px;
+        }
+    }
+    >textarea{
+        width: 100%;
+        width: calc(~"100% - 88px");
+        border-radius: 5px;
+        padding: 5px 2px;
+        .appearance();
+    }
+}

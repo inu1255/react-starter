@@ -1,0 +1,42 @@
+@import "~asha/_.less";
+
+.inu-toast{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1001;
+    width: 20%;
+    min-width: 360px;
+    >.item{
+        padding: 12px;
+        position: relative;
+        left: 100%;
+        margin: 7px 0;
+        opacity: 0;
+        &.primary{
+            .magic-color(@color_primary);
+        }
+        &.error{
+            .magic-color(@color_red);
+        }
+        &.info{
+            .magic-color(@color_info);
+        }
+        &.warning{
+             .magic-color(@color_warning);   
+        }
+        &.success{
+             .magic-color(@color_success);   
+        }
+        .transition;
+        &.show{
+            opacity: 1;
+            left: 0;
+        }
+        >i{
+            font-size:12px;
+            display: block;
+            float: right;
+        }
+    }
+}

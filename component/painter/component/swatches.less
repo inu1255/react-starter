@@ -1,0 +1,44 @@
+@import "~asha/_.less";
+
+.inu-swatches{
+    position: relative;
+    >canvas,>.select{
+        position: absolute;
+        top: 100%;
+    }
+    >button{
+        margin-top: 1px;
+        height: 27px;
+        width: 50px;
+        float: left;
+    }
+    >canvas{
+        display: none;
+    }
+    >.select{
+        display: none;
+        padding: 12px;
+        left: -12px;
+        background: RGBA(248, 248, 248, 1.00);
+        border: 1px solid #ccc;
+        border-top: none;
+        >.item{
+            height: 24px;
+            width: 50px;
+            margin-top: 5px;
+        }
+    }
+    &:hover{
+        >.select{
+            display: block;
+        }
+    }
+    &.canvas:hover{
+        >canvas{
+            display: block;
+        }
+        >.select{
+            display: none;
+        }
+    }
+}

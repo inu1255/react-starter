@@ -1,0 +1,172 @@
+@import "~asha/_.less";
+
+.inu-draw{
+    position: relative;
+    margin-bottom: 364px;
+    width: 889px;
+    width: ~"calc(100% - 340px)";
+    >.tools{
+        width: 100%;
+        position: absolute;
+        z-index: 3;
+        background: #F8F8F8;
+        border: 1px solid #ccc;
+        border-right: 0;
+        &.fix{
+            position: fixed;
+            top: 80px;
+            width: ~"calc(100% - 440px)"
+        }
+        >button{
+            margin-top: 0;
+            padding-top: 4px;
+            >img{
+                height: 21px;
+            }
+        }
+        >*{
+            margin-top: 1px;
+            margin-right: 8px;
+            float: left;
+            font-size: 24px;
+            .magic-color(#F8F8F8);
+            &:disabled{
+                background: #F8F8F8;
+                color: #ccc;
+            }
+        }
+        >.inu-swatches{
+            position: relative;
+            >.select{
+                top: 30px;
+            }
+        }
+        >.right{
+            float: right;
+            font-size: 16px;    
+            padding: 4px;
+            margin: 3px 7px;
+            border-radius: 5px;
+            .magic-color(#24B9A7);
+        }
+    }
+    >.pen{
+        position: absolute;
+        margin-top: 24px;
+        padding: 7px;
+    }
+    >.s_m_c_right{
+        position: absolute;
+        min-width: 340px;
+        // margin-left: 888px;
+        left: 100%;
+        overflow-y: auto;
+        background-color: @color_gray;
+        border:1px solid #ccc;
+        font-size: 14px;
+        >.right_scoring{
+            padding:20px;
+            border-bottom: 1px solid #ccc;
+            >.r_s_title{
+                line-height: 40px;
+                font-size: 18px;
+                >.icon-pingjiajilu{
+                    font-size: 30px;
+                    margin-right: 6px;
+                }
+            }
+            >.r_s_table{
+                border:1px solid #ccc;
+                border-right: 0;
+                text-align: center;
+                background-color: #fff;
+                margin-top: 10px;
+                >thead{
+                    >tr{
+                        >th{
+                            border-bottom: 1px solid #ccc;
+                            line-height: 40px;
+                            font-weight: 100;
+                        }
+                    }
+                }
+                >tbody{
+                    >tr{
+                        >td{
+                            line-height: 80px;
+                        }
+                        >td:nth-child(2){
+                            color: @color_red;
+                            font-weight: bold;
+                            >em{
+                                font-size: 28px;
+                            }
+                        }
+                    }
+                }
+                >thead>tr>th,>tbody>tr>td{
+                    border-right: 1px solid #ccc;
+                }
+            }
+            >.r_s_tablefen{
+                border:1px solid #ccc;
+                border-right: 0;
+                text-align: center;
+                margin-top: 10px;
+                >thead{
+                    >tr{
+                        >th{
+                            border-bottom: 1px solid #ccc;
+                            line-height: 30px;
+                            font-weight: 100;
+                            background-color: #eee;
+                        }
+                    }
+                }
+                >tbody{
+                    >tr{
+                        >td{
+                            background-color: #fff;
+                            line-height: 40px;
+                            color:@color_red;
+                        }
+                    }
+                }
+                >thead>tr>th,>tbody>tr>td{
+                    border-right: 1px solid #ccc;
+                }
+            }
+        }
+        >.right_content{
+            padding:20px;
+            >.r_c_title{
+                margin-bottom: 20px;
+                >.r_c_t_num{
+                    font-size: 12px;
+                }
+            }
+            >.r_c_topic{
+                overflow: hidden;
+                border-left: 1px solid #ccc;
+                margin-bottom: 20px;
+                >ul{
+                    width: 20%;
+                    border:1px solid #ccc;
+                    border-left: 0;
+                    text-align: center;
+                    float: left;
+                    >li{
+                        background-color: #B3E5E0;
+                        line-height: 20px;
+                    }
+                    >li:nth-child(2){
+                        color:@color_red;
+                        background-color: #fff;
+                        line-height: 40px;
+                        border-top: 1px solid #ccc;
+                    }
+                }
+            }
+        }
+    }
+}

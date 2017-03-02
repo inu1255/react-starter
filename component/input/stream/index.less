@@ -1,0 +1,40 @@
+@import "~asha/_.less";
+
+.inu-stream{
+    padding: 18px;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+    font-size: 14px;
+    text-align: left;
+    >div{
+        float: left;
+    }
+    >.progress{
+        position: absolute;
+        width: 0;
+        height: 51px;
+        background: #e2eeff;    
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    >.file{
+        width: 50%;
+        >.upload{
+            margin: -12px 0;
+            padding: 12px 24px;
+            float: left;
+            .magic-color();
+        }
+    }
+    >.filesize{
+        width: 12%;
+    }
+    >.speed{
+        width: 19%;
+    }
+    >.rest{
+        width: 19%;
+    }
+}

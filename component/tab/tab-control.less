@@ -1,0 +1,28 @@
+@import "~asha/_.less";
+
+.tabs-control{
+    >.Tab_title_wrap{
+        overflow: hidden;
+        >.Tab_title{
+            .magic-color(#fff);
+            float: left;
+            height: 44px;
+            line-height: 44px;
+            width: 128px;
+            text-align: center;
+            cursor: pointer;
+            border-right: 1px solid #ccc;
+            &.active{
+                .magic-color();
+            }
+        }
+    }
+    >.Tab_item_wrap{
+        .Tab_item{
+            display: none;
+            &.show{
+                display: block;
+            }
+        }
+    }
+}
