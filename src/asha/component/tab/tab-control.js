@@ -23,7 +23,7 @@ class TabsControl extends React.Component{
         return(
             <div className={cx(tabs-control)}>
                 {/*动态生成Tab导航*/}
-                <div className={cx("Tab"_title_wrap)}>
+                <div className={cx("Tab_title_wrap")}>
                     { 
                         React.Children.map( this.props.children , (element,index) => {
                         return(
@@ -32,10 +32,10 @@ class TabsControl extends React.Component{
                             );
                     }) 
                     }
-                    {this.props.add?<div className={cx("Tab"_title)} onClick={this.add.bind(this)}>添加</div>:null}
+                    {this.props.add?<div className={cx("Tab_title")} onClick={this.add.bind(this)}>添加</div>:null}
                 </div>
                 {/*Tab内容区域*/}
-                <div className={cx("Tab"_item_wrap)}>
+                <div className={cx("Tab_item_wrap")}>
                     {React.Children.map(this.props.children,(element,index)=>{
                         return(
                             <div className={ this.check_item_index(index) }>{ element }</div>

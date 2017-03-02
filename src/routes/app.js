@@ -1,22 +1,21 @@
 import React from 'react';
 import { connect } from 'dva';
-import styles from './main.less';
+import styles from './app.less';
 import classnames from "classnames/bind"
 const cx = classnames.bind(styles)
-import { Layout, Icon } from 'antd';
-const {Header, Footer, Sider, Content} = Layout;
 
-import Menu from '../menu.js'
+import Login from './other/login.js'
 
-class Main extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
-    this.displayName = 'Main';
+    this.displayName = 'App';
     this.state = {}
   }
   render() {
+    if (!this.props.user) return <Login></Login>
     return (
-      <div className={ cx("main-container") }>
+      <div className={ cx("app-container") }>
         <Layout>
           <Sider trigger={ null } collapsible collapsed={ this.state.collapsed }>
             <Menu menu={ this.props.sider } theme="dark" mode="inline"></Menu>
@@ -26,7 +25,7 @@ class Main extends React.Component {
               <Icon className="trigger" type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } onClick={ this.toggle } />
             </Header>
             <Content style={ { margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 } }>
-              Content
+              { this.props.children }
             </Content>
           </Layout>
         </Layout>
@@ -35,4 +34,4 @@ class Main extends React.Component {
   }
 }
 
-export default connect(({menu}) => menu)(Main);
+export default connect(({app}) => app)(App)

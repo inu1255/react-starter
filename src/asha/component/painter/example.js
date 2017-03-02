@@ -65,9 +65,9 @@ class Draw extends React.Component {
         var paper = this.props.paper
         var dist = this.props.dist
         var s = this.state.score
-        return <div {...this.props} className={"inu-draw "+(this.props.className||"")}>
+        return <div {...this.props} className={cx("inu-draw ",this.props.className)}>
                 <div className={cx(s_m_c_right)}>
-                    <div className={cx("right"_scoring)}>
+                    <div className={cx("right_scoring")}>
                         <div className={cx(r_s_title)}><i className={cx("iconfont","icon-pingjiajilu")}></i>计分卡</div>
                         <table width="100%" className={cx(r_s_table)}>
                             <colgroup><col width="25%" /><col width="75%" /></colgroup>
@@ -80,7 +80,7 @@ class Draw extends React.Component {
                             <tbody><tr>{paper.parts.map((item,i)=>{return <td key={i}>{this.partScore(i)}</td> })}</tr></tbody> 
                         </table>
                     </div>
-                    <div className={cx("right"_content)}>
+                    <div className={cx("right_content")}>
                         {this.renderParts(paper.parts)}
                     </div>
                 </div>
