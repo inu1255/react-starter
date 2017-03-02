@@ -5,14 +5,17 @@ export default {
     menu:[
         {
             icon:"cloud",
-            title:"云央科技"
+            to:"index",
+            title:"网站名"
         },
         {
             title:"注册",
+            to:"register",
             right:true
         },
         {
             title:"登录",
+            to:"login",
             right:true
         }
     ]

@@ -1,16 +1,16 @@
 import React from 'react';
 import { Router, Route, IndexRoute } from 'dva/router';
-import IndexPage from './routes/IndexPage';
-import MainLayout from './components/layout/lr/Main.js';
+import MainLayout from './components/layout/lr/main.js';
 
 const EmptyRoute = ({ children }) => (children);
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
       <Route path="/" component={EmptyRoute}>
-        <IndexRoute component={IndexPage}></IndexRoute>
+        <IndexRoute component={require("./routes/index.js")}></IndexRoute>
         <Route path="" component={MainLayout}>
-          <Route path="/index" component={IndexPage}></Route>
+          <Route path="/index" component={require("./routes/index.js")}></Route>
+          <Route path="/login" component={require("./routes/other/login.js")}></Route>
         </Route>
       </Route>
     </Router>

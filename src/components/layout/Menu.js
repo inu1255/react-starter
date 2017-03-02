@@ -23,7 +23,6 @@ class InuMenu extends React.Component {
         }
         if (menu.group) return this.selectedKeys(menu.menu,i)
         if(menu.to!==undefined&&this.props.router.isActive({ pathname: menu.to })){
-            console.log(menu.to,i)
             return i
         }
         return -1
@@ -44,7 +43,8 @@ class InuMenu extends React.Component {
         if (menu.menu) return <SubMenu key={i} title={this.renderItem(menu)}>
             {this.renderMenu(menu.menu)}
         </SubMenu>
-        return <Menu.Item key={this.state.count++} style={{float:menu.right?'right':'left'}}>
+        var style = (this.props.mode=="horizontal"&&menu.right)?{float:'right'}:{}
+        return <Menu.Item key={this.state.count++} style={style}>
             {this.renderItem(menu)}
         </Menu.Item>
     }
@@ -52,7 +52,7 @@ class InuMenu extends React.Component {
         var current = this.selectedKeys(this.props.menu)
         if (current<0) current = "0"
         this.state.count
-        return <Menu {...this.props} selectedKeys={[current.toString()]} mode="horizontal">
+        return <Menu {...this.props} selectedKeys={[current.toString()]}>
             {this.state.menu}
         </Menu>
     }
