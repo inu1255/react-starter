@@ -13,7 +13,7 @@ class App extends React.Component {
     this.state = {}
   }
   render() {
-    if (!this.props.user) return <Login></Login>
+    if (!this.props.login) return <Login></Login>
     return (
       <div className={ cx("app-container") }>
         <Layout>

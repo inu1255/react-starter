@@ -1,46 +1,38 @@
+import { query } from '../services/login.js'
 
 export default {
-  namespace: 'menu',
-  state: {
-    sider: [
-      {
-        icon: "cloud",
-        to: "index",
-        title: "网站名"
-      },
-      {
-        title: "注册",
-        to: "register",
-        right: true
-      },
-      {
-        title: "登录",
-        to: "login",
-        right: true
-      }
-    ]
-  },
-
-  subscriptions: {
-    setup({dispatch, history}) { // eslint-disable-line
+    namespace: 'app',
+    state: {
+        login: false
     },
-  },
 
-  effects: {
-    *fetch({payload}, {call, put}) { // eslint-disable-line
-      yield put({
-        type: 'save'
-      });
+    subscriptions: {
+        setup({dispatch, history}) { // eslint-disable-line
+            dispatch({
+                type: 'login'
+            })
+        },
     },
-  },
 
-  reducers: {
-    save(state, action) {
-      return {
-        ...state,
-        ...action.payload
-      };
+    effects: {
+        *login({payload}, {call, put}) { // eslint-disable-line
+            const data = yield call(query, parse(payload))
+            console.log(data)
+            yield put({
+                type: 'logined',
+                payload: data
+            });
+        },
     },
-  },
+
+    reducers: {
+        logind(state, action) {
+            console.log(action)
+            return {
+                ...state,
+                loading: true
+            };
+        },
+    },
 
 };
