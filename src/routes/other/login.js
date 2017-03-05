@@ -7,63 +7,82 @@ import { Button, Row, Form, Input } from 'antd'
 const FormItem = Form.Item
 import Link from 'asha/component/link/link.js'
 
-const Login = ({loginButtonLoading, onOk, form: {getFieldDecorator, validateFieldsAndScroll}}) => {
-  function handleOk() {
-    validateFieldsAndScroll((errors, values) => {
-      if (errors) {
-        return
-      }
-      onOk(values)
-    })
-  }
+import UserModel from '../../services/user.js'
+const model = new UserModel()
 
-  return (
-    <div className={ cx("login-container") }>
-      <div className={ styles.logo }>
-        <Link to="/index">
-        <img src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" />
-        <span>Ant Design</span>
-        </Link>
-      </div>
-      <form>
-        <FormItem hasFeedback>
-          { getFieldDecorator('username', {
-              rules: [
-                {
-                  required: true,
-                  message: '请填写用户名'
-                }
-              ]
-            })(<Input size='large' onPressEnter={ handleOk } placeholder='用户名' />) }
-        </FormItem>
-        <FormItem hasFeedback>
-          { getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                  message: '请填写密码'
-                }
-              ]
-            })(<Input size='large' type='password' onPressEnter={ handleOk } placeholder='密码' />) }
-        </FormItem>
-        <Row>
-          <Button type='primary' size='large' onClick={ handleOk } loading={ loginButtonLoading }>
-            登录
-          </Button>
-        </Row>
-        <p>
-          <span>账号：guest</span>
-          <span>密码：guest</span>
-        </p>
-      </form>
-    </div>
-  )
+class Login extends React.Component {
+    constructor(props) {
+        super(props)
+        this.displayName = 'Login'
+        this.state = {
+            loginButtonLoading: false,
+            loginErrorMsg: ""
+        }
+    }
+    handleOk() {
+        this.props.form.validateFieldsAndScroll((errors, values) => {
+            if (errors) {
+                return
+            }
+            this.setState({ loginButtonLoading: true })
+            model.login(values).then((data) => {
+                this.props.dispatch({ type: 'app/login', payload: data })
+                this.setState({ loginButtonLoading: false })
+            }, (msg) => {
+                this.setState({ loginErrorMsg: msg, loginButtonLoading: false })
+            })
+        })
+    }
+    onChange() {
+        if (this.state.loginErrorMsg) {
+            this.setState({ loginErrorMsg: "" })
+        }
+    }
+    render() {
+        return (
+            <div className={ cx("login-container") }>
+                <div className={ cx("logo") }>
+                    <Link to="/index">
+                    <img src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" />
+                    <span>Cloud Center</span>
+                    </Link>
+                </div>
+                <form>
+                    <FormItem hasFeedback>
+                        { this.props.form.getFieldDecorator('telphone', {
+                              rules: [{ required: true, message: '请填写用户名' }]
+                          })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='用户名' />) }
+                    </FormItem>
+                    <FormItem hasFeedback>
+                        { this.props.form.getFieldDecorator('password', {
+                              rules: [{ required: true, message: '请填写密码' }]
+                          })(<Input
+                                    onChange={ this.onChange.bind(this) }
+                                    size='large'
+                                    type='password'
+                                    onPressEnter={ this.handleOk.bind(this) }
+                                    placeholder='密码' />) }
+                    </FormItem>
+                    <Row>
+                        <Button type='primary' size='large' onClick={ this.handleOk.bind(this) } loading={ this.state.loginButtonLoading }>
+                            登录
+                        </Button>
+                    </Row>
+                    <div className={ cx("footer") }>
+                        <div className={ cx("error-msg") }>
+                            { this.state.loginErrorMsg }
+                        </div>
+                        <Link to="/register"> 去注册
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        )
+    }
 }
 
 Login.propTypes = {
-  form: PropTypes.object,
-  loginButtonLoading: PropTypes.bool,
-  onOk: PropTypes.func
+    form: PropTypes.object
 }
 
-export default Form.create()(Login)
+export default connect(({app}) => app)(Form.create()(Login))

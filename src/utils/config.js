@@ -1,6 +1,6 @@
 
 export default {
-    API: "http://www.tederen.com:8017",
+    API: "http://localhost:8017",
     OPTION: {
         credentials: 'include',
         headers: {

@@ -1,38 +1,20 @@
-import { query } from '../services/login.js'
+import UserModel from '../services/user.js'
+const model = new UserModel()
 
 export default {
     namespace: 'app',
     state: {
-        login: false
+        login: model.isLogin(),
     },
-
     subscriptions: {
-        setup({dispatch, history}) { // eslint-disable-line
-            dispatch({
-                type: 'login'
-            })
-        },
     },
-
-    effects: {
-        *login({payload}, {call, put}) { // eslint-disable-line
-            const data = yield call(query, parse(payload))
-            console.log(data)
-            yield put({
-                type: 'logined',
-                payload: data
-            });
-        },
-    },
-
     reducers: {
-        logind(state, action) {
-            console.log(action)
+        login(origin, {payload}) {
             return {
-                ...state,
-                loading: true
+                ...origin,
+                login: true
             };
-        },
+        }
     },
 
 };
