@@ -38,8 +38,22 @@ class Register extends React.Component {
             this.setState({ ErrorMsg: "" })
         }
     }
+    Unfreezing() {
+        setTimeout(() => {
+            this.state.codeFreezing--
+            this.setState({})
+        }, 1000)
+    }
     sendCode() {
-        model.request("/verify/send/")
+        const form = this.props.form
+        if (form.isFieldValidating("telphone")) {
+            const telphone = this.props.form.getFieldValue("telphone")
+            model.request("/verify/send/" + telphone)
+            this.setState({ codeFreezing: 60 })
+            this.Unfreezing()
+        } else {
+
+        }
     }
     render() {
         return (
@@ -53,23 +67,15 @@ class Register extends React.Component {
                 <form>
                     <FormItem hasFeedback>
                         { this.props.form.getFieldDecorator('telphone', {
-                              rules: [{ required: true, message: '请填写用户名' }]
-                          })(<Input
-                                    onChange={ this.onChange.bind(this) }
-                                    size='large'
-                                    onPressEnter={ this.handleOk.bind(this) }
-                                    placeholder='邮箱' />) }
+                              rules: [{ required: true, message: '请填写邮箱' }, { message: '邮箱格式不正确', type: "email" }]
+                          })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='邮箱' />) }
                     </FormItem>
                     <FormItem>
                         <Row gutter={ 8 }>
                             <Col span={ 12 }>
                             { this.props.form.getFieldDecorator('code', {
                                   rules: [{ required: true, message: '请填写验证码' }]
-                              })(<Input
-                                        onChange={ this.onChange.bind(this) }
-                                        size='large'
-                                        onPressEnter={ this.handleOk.bind(this) }
-                                        placeholder='验证码' />) }
+                              })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='验证码' />) }
                             </Col>
                             <Col span={ 12 }>
                             <Button onClick={ this.sendCode.bind(this) } disabled={ this.state.codeFreezing }>
@@ -89,11 +95,7 @@ class Register extends React.Component {
                                     placeholder='密码' />) }
                     </FormItem>
                     <Row>
-                        <Button
-                                type='primary'
-                                size='large'
-                                onClick={ this.handleOk.bind(this) }
-                                loading={ this.state.ButtonLoading }>
+                        <Button type='primary' size='large' onClick={ this.handleOk.bind(this) } loading={ this.state.ButtonLoading }>
                             注册
                         </Button>
                     </Row>
