@@ -2,7 +2,7 @@ import Model from './model.js'
 
 function UserModel() {
 }
-UserModel.prototype = new Model("user", "api.login")
+UserModel.prototype = new Model("user", "app")
 UserModel.prototype.login = function(data) {
     return new Promise((resolve, reject) => {
         this.request("login", data).then((data) => {
@@ -26,11 +26,6 @@ UserModel.prototype.register = function(data) {
             reject(msg)
         })
     })
-}
-UserModel.prototype.isLogin = function() {
-    if (typeof this.storage.access != "object") return false
-    const {token, expired_at} = this.storage.access
-    return token && new Date(expired_at) > new Date()
 }
 
 export default UserModel

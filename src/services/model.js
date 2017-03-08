@@ -14,7 +14,7 @@ Model.prototype.del = function(id) {
 Model.prototype.save = function(data) {
     return api.request("/" + this.name + "/save", data)
 }
-Model.prototype.search = function(condition) {
+Model.prototype.search = function(data) {
     return api.request("/" + this.name + "/search", data)
 }
 Model.prototype.request = function(uri, data) {

@@ -27,8 +27,8 @@ class Login extends React.Component {
             }
             this.setState({ loginButtonLoading: true })
             model.login(values).then((data) => {
-                this.props.dispatch({ login: true })
-                this.setState({ loginButtonLoading: false })
+                this.state.loginButtonLoading = true
+                this.props.dispatch({})
             }, (msg) => {
                 this.setState({ loginErrorMsg: msg, loginButtonLoading: false })
             })
@@ -52,20 +52,25 @@ class Login extends React.Component {
                     <FormItem hasFeedback>
                         { this.props.form.getFieldDecorator('telphone', {
                               rules: [{ required: true, message: '请填写用户名' }]
-                          })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='用户名' />) }
+                          })(<Input onChange={ this.onChange.bind(this) }
+                                    size='large'
+                                    onPressEnter={ this.handleOk.bind(this) }
+                                    placeholder='用户名' />) }
                     </FormItem>
                     <FormItem hasFeedback>
                         { this.props.form.getFieldDecorator('password', {
                               rules: [{ required: true, message: '请填写密码' }]
-                          })(<Input
-                                    onChange={ this.onChange.bind(this) }
+                          })(<Input onChange={ this.onChange.bind(this) }
                                     size='large'
                                     type='password'
                                     onPressEnter={ this.handleOk.bind(this) }
                                     placeholder='密码' />) }
                     </FormItem>
                     <Row>
-                        <Button type='primary' size='large' onClick={ this.handleOk.bind(this) } loading={ this.state.loginButtonLoading }>
+                        <Button type='primary'
+                                size='large'
+                                onClick={ this.handleOk.bind(this) }
+                                loading={ this.state.loginButtonLoading }>
                             登录
                         </Button>
                     </Row>

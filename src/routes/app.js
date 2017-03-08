@@ -9,6 +9,7 @@ const cx = classnames.bind(styles)
 
 import Login from './other/login.js'
 import Register from './other/register.js'
+import siderMenu from '../storage/sidermenu.js'
 
 class App extends React.Component {
     constructor(props) {
@@ -16,21 +17,29 @@ class App extends React.Component {
         this.displayName = 'App';
         this.state = {}
     }
+    toggle() {
+        this.setState({ collapsed: !this.state.collapsed })
+    }
     render() {
-        console.log("render")
-        if (!this.props.login) {
+        if (!this.props.isLogin()) {
             if (this.props.location.query.register) return <Register></Register>
             return <Login></Login>
         }
         return (
             <div className={ cx("app-container") }>
                 <Layout>
-                    <Sider trigger={ null } collapsible collapsed={ this.state.collapsed }>
-                        <Menu menu={ this.props.sider } theme="dark" mode="inline"></Menu>
+                    <Sider trigger={ null }
+                           collapsible
+                           collapsed={ this.state.collapsed }>
+                        <Menu menu={ siderMenu }
+                              theme="dark"
+                              mode="inline"></Menu>
                     </Sider>
                     <Layout>
                         <Header style={ { background: '#fff', padding: 0 } }>
-                            <Icon className="trigger" type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } onClick={ this.toggle } />
+                            <Icon className={ cx("trigger") }
+                                  type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' }
+                                  onClick={ this.toggle.bind(this) } />
                         </Header>
                         <Content style={ { margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 } }>
                             { this.props.children }

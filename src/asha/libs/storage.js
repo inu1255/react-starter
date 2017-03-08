@@ -60,6 +60,15 @@ var ComponentStorage = function(app, Defualt) {
             item.setState({})
         })
     }
+    this.dispatch = function(state, save) {
+        if (typeof state == "object") {
+            Object.assign(this.getData(), state)
+            if (save)
+                this.saveStorage()
+            else
+                this.update()
+        }
+    }
     this.getData = function() {
         return _data
     }
@@ -76,20 +85,28 @@ ComponentStorage.connect = (name) => (App) => {
             s.bind(this)
         },
         render() {
-            return <App app={ map } dispatch={ (state) => {
-                                if (typeof state == "object") {
-                                    Object.assign(s.getData(), state)
-                                    s.update()
-                                } else if (state === "save") {
-                                    s.saveStorage()
-                                }
-                            } } {...s.getData()} {...this.props}>
-                       { this.props.children }
-                   </App>
+            return (
+                <App {...s.getData()}
+                     {...this.props}
+                     app={ map }
+                     dispatch={ s.dispatch.bind(s) }>
+                    { this.props.children }
+                </App>
+            )
         }
     })
     return Storage
 }
 
+ComponentStorage.register = function(name, app) {
+    if (typeof app == "object") {
+        var s = storage(name)
+        for (var k in app) {
+            if (typeof app[k] == "function") {
+                s[k] = app[k].bind(s)
+            }
+        }
+    }
+}
 
 module.exports = ComponentStorage

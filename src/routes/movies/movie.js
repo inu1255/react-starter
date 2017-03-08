@@ -11,7 +11,6 @@ class Movie extends React.Component {
         this.state = {}
     }
     render() {
-        console.log("menu")
         return (
             <div className={ cx("movie-container") }>
                 movie.js

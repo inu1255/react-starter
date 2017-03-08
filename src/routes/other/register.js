@@ -27,8 +27,8 @@ class Register extends React.Component {
             }
             this.setState({ ButtonLoading: true })
             model.register(values).then((data) => {
-                this.props.dispatch({ type: 'app/login', payload: data })
-                this.setState({ ButtonLoading: false })
+                this.state.ButtonLoading = false
+                this.props.dispatch({})
             }, (msg) => {
                 this.setState({ ErrorMsg: msg, ButtonLoading: false })
             })
@@ -74,14 +74,20 @@ class Register extends React.Component {
                     <FormItem hasFeedback>
                         { form.getFieldDecorator('telphone', {
                               rules: [{ required: true, message: '请填写邮箱' }, { message: '邮箱格式不正确', type: "email" }]
-                          })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='邮箱' />) }
+                          })(<Input onChange={ this.onChange.bind(this) }
+                                    size='large'
+                                    onPressEnter={ this.handleOk.bind(this) }
+                                    placeholder='邮箱' />) }
                     </FormItem>
                     <FormItem>
                         <Row gutter={ 8 }>
                             <Col span={ 12 }>
                             { form.getFieldDecorator('code', {
                                   rules: [{ required: true, message: '请填写验证码' }]
-                              })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='验证码' />) }
+                              })(<Input onChange={ this.onChange.bind(this) }
+                                        size='large'
+                                        onPressEnter={ this.handleOk.bind(this) }
+                                        placeholder='验证码' />) }
                             </Col>
                             <Col span={ 12 }>
                             <Button onClick={ this.sendCode.bind(this) } disabled={ form.getFieldError("telphone") || !form.getFieldValue("telphone") || this.state.codeFreezing }>
@@ -93,15 +99,17 @@ class Register extends React.Component {
                     <FormItem hasFeedback>
                         { form.getFieldDecorator('password', {
                               rules: [{ required: true, message: '请填写密码' }]
-                          })(<Input
-                                    onChange={ this.onChange.bind(this) }
+                          })(<Input onChange={ this.onChange.bind(this) }
                                     size='large'
                                     type='password'
                                     onPressEnter={ this.handleOk.bind(this) }
                                     placeholder='密码' />) }
                     </FormItem>
                     <Row>
-                        <Button type='primary' size='large' onClick={ this.handleOk.bind(this) } loading={ this.state.ButtonLoading }>
+                        <Button type='primary'
+                                size='large'
+                                onClick={ this.handleOk.bind(this) }
+                                loading={ this.state.ButtonLoading }>
                             注册
                         </Button>
                     </Row>
