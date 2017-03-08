@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router'
 import styles from './register.less';
 import classnames from "classnames/bind"
 const cx = classnames.bind(styles)
-import { Button, Row, Form, Input, Col } from 'antd'
+import { message, Button, Row, Form, Input, Col } from 'antd'
 const FormItem = Form.Item
 import Link from 'asha/component/link/link.js'
 
@@ -39,23 +40,28 @@ class Register extends React.Component {
         }
     }
     Unfreezing() {
-        setTimeout(() => {
-            this.state.codeFreezing--
-            this.setState({})
-        }, 1000)
+        if (this.state.codeFreezing > 0) {
+            setTimeout(() => {
+                this.state.codeFreezing--
+                this.setState({})
+                this.Unfreezing()
+            }, 1000)
+        }
     }
     sendCode() {
         const form = this.props.form
-        if (form.isFieldValidating("telphone")) {
-            const telphone = this.props.form.getFieldValue("telphone")
-            model.request("/verify/send/" + telphone)
-            this.setState({ codeFreezing: 60 })
-            this.Unfreezing()
-        } else {
-
+        if (form.getFieldValue("telphone") && !form.getFieldError("telphone")) {
+            const telphone = form.getFieldValue("telphone")
+            model.request("/verify/send/" + telphone).then((data) => {
+                this.state.codeFreezing = 60
+                this.setState({})
+                this.Unfreezing()
+                message.success("验证码发送成功")
+            })
         }
     }
     render() {
+        const form = this.props.form
         return (
             <div className={ cx("login-container") }>
                 <div className={ cx("logo") }>
@@ -66,26 +72,34 @@ class Register extends React.Component {
                 </div>
                 <form>
                     <FormItem hasFeedback>
-                        { this.props.form.getFieldDecorator('telphone', {
+                        { form.getFieldDecorator('telphone', {
                               rules: [{ required: true, message: '请填写邮箱' }, { message: '邮箱格式不正确', type: "email" }]
-                          })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='邮箱' />) }
+                          })(<Input
+                                    onChange={ this.onChange.bind(this) }
+                                    size='large'
+                                    onPressEnter={ this.handleOk.bind(this) }
+                                    placeholder='邮箱' />) }
                     </FormItem>
                     <FormItem>
                         <Row gutter={ 8 }>
                             <Col span={ 12 }>
-                            { this.props.form.getFieldDecorator('code', {
+                            { form.getFieldDecorator('code', {
                                   rules: [{ required: true, message: '请填写验证码' }]
-                              })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='验证码' />) }
+                              })(<Input
+                                        onChange={ this.onChange.bind(this) }
+                                        size='large'
+                                        onPressEnter={ this.handleOk.bind(this) }
+                                        placeholder='验证码' />) }
                             </Col>
                             <Col span={ 12 }>
-                            <Button onClick={ this.sendCode.bind(this) } disabled={ this.state.codeFreezing }>
+                            <Button onClick={ this.sendCode.bind(this) } disabled={ form.getFieldError("telphone") || !form.getFieldValue("telphone") || this.state.codeFreezing }>
                                 { this.state.codeFreezing ? this.state.codeFreezing + '秒' : "发送验证码" }
                             </Button>
                             </Col>
                         </Row>
                     </FormItem>
                     <FormItem hasFeedback>
-                        { this.props.form.getFieldDecorator('password', {
+                        { form.getFieldDecorator('password', {
                               rules: [{ required: true, message: '请填写密码' }]
                           })(<Input
                                     onChange={ this.onChange.bind(this) }
@@ -95,7 +109,11 @@ class Register extends React.Component {
                                     placeholder='密码' />) }
                     </FormItem>
                     <Row>
-                        <Button type='primary' size='large' onClick={ this.handleOk.bind(this) } loading={ this.state.ButtonLoading }>
+                        <Button
+                                type='primary'
+                                size='large'
+                                onClick={ this.handleOk.bind(this) }
+                                loading={ this.state.ButtonLoading }>
                             注册
                         </Button>
                     </Row>
@@ -103,8 +121,7 @@ class Register extends React.Component {
                         <div className={ cx("error-msg") }>
                             { this.state.ErrorMsg }
                         </div>
-                        <Link to="/login"> 去登录
-                        </Link>
+                        <a onClick={ this.props.dispatch({ type: "register", payload: false }) }>去登录</a>
                     </div>
                 </form>
             </div>

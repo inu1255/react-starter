@@ -2,6 +2,7 @@ import fetch from 'dva/fetch';
 import storage from 'asha/libs/storage.js'
 import pick from 'asha/libs/file/picker.js'
 var sto = storage("api.login")
+import { message } from 'antd'
 
 import { API, OPTION } from './config.js'
 
@@ -23,7 +24,7 @@ module.exports = {
                 if (!res) reject(404)
                 else if (typeof res.code == "undefined") resolve(res)
                 else if (res.code == 0) resolve(res.data)
-                else reject(res.msg)
+                else message.error(res.msg)
             })
         })
     }

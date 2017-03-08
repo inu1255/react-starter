@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'dva';
 import styles from './login.less';
 import classnames from "classnames/bind"
 const cx = classnames.bind(styles)
@@ -51,7 +50,11 @@ class Login extends React.Component {
                     <FormItem hasFeedback>
                         { this.props.form.getFieldDecorator('telphone', {
                               rules: [{ required: true, message: '请填写用户名' }]
-                          })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='用户名' />) }
+                          })(<Input
+                                    onChange={ this.onChange.bind(this) }
+                                    size='large'
+                                    onPressEnter={ this.handleOk.bind(this) }
+                                    placeholder='用户名' />) }
                     </FormItem>
                     <FormItem hasFeedback>
                         { this.props.form.getFieldDecorator('password', {
@@ -64,7 +67,11 @@ class Login extends React.Component {
                                     placeholder='密码' />) }
                     </FormItem>
                     <Row>
-                        <Button type='primary' size='large' onClick={ this.handleOk.bind(this) } loading={ this.state.loginButtonLoading }>
+                        <Button
+                                type='primary'
+                                size='large'
+                                onClick={ this.handleOk.bind(this) }
+                                loading={ this.state.loginButtonLoading }>
                             登录
                         </Button>
                     </Row>
@@ -72,8 +79,7 @@ class Login extends React.Component {
                         <div className={ cx("error-msg") }>
                             { this.state.loginErrorMsg }
                         </div>
-                        <Link to="/register"> 去注册
-                        </Link>
+                        <a onClick={ this.props.dispatch({ type: "register", payload: true }) }>去注册</a>
                     </div>
                 </form>
             </div>
@@ -85,4 +91,4 @@ Login.propTypes = {
     form: PropTypes.object
 }
 
-export default connect(({app}) => app)(Form.create()(Login))
+export default (Form.create()(Login))

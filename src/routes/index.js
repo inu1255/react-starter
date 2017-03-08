@@ -7,29 +7,46 @@ import styles from './index.less';
 import Menu from '../components/layout/menu.js'
 import banner from "../assets/banner.jpg"
 
-function Index(props) {
-  return (
-    <div className={ styles.container }>
-      <Menu menu={ [ { icon: "cloud", to: "index", title: "网站名" }, { title: "注册", to: "register", right: true }, { title: "登录", to: "login", right: true } ] } theme="dark" mode="horizontal"></Menu>
-      <Carousel autoplay>
-        <div>
-          <Img src={ banner }></Img>
-        </div>
-        <div>
-          <Img src={ banner }></Img>
-        </div>
-        <div>
-          <Img src={ banner }></Img>
-        </div>
-        <div>
-          <Img src={ banner }></Img>
-        </div>
-      </Carousel>
-    </div>
-    );
+class Index extends React.Component {
+    constructor(props) {
+        super(props)
+        this.displayName = 'Index'
+        this.state = {
+            a: [1]
+        }
+    }
+    update() {
+        this.state.a[0]++
+        this.setState({})
+    }
+    render() {
+        console.log(this.state.a)
+        return (
+            <div onClick={ this.update.bind(this) } className={ styles.container }>
+                <Menu
+                      menu={ [{ icon: "cloud", to: "index", title: "网站名" }, { title: "注册", to: { pathname: "register", query: {} }, right: true }, { title: "登录", to: "login", right: true }] }
+                      theme="dark"
+                      mode="horizontal"></Menu>
+                <Carousel autoplay>
+                    <div>
+                        <Img src={ banner }></Img>
+                    </div>
+                    <div>
+                        <Img src={ banner }></Img>
+                    </div>
+                    <div>
+                        <Img src={ banner }></Img>
+                    </div>
+                    <div>
+                        <Img src={ banner }></Img>
+                    </div>
+                </Carousel>
+            </div>
+        )
+    }
 }
 
 Index.propTypes = {
 };
 
-export default connect()(Index);
+export default connect(({app}) => app)(Index);

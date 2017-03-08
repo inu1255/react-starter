@@ -18,7 +18,7 @@ Model.prototype.search = function(condition) {
     return api.request("/" + this.name + "/search", data)
 }
 Model.prototype.request = function(uri, data) {
-    if (uri.CharAt(0) == "/") return api.request(uri, data)
+    if (uri.charAt(0) == "/") return api.request(uri, data)
     return api.request("/" + this.name + "/" + uri, data)
 }
 Model.prototype.saveStorage = function() {
