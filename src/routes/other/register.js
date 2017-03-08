@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'dva';
+import { connect } from 'asha/libs/storage.js';
 import { routerRedux } from 'dva/router'
 import styles from './register.less';
 import classnames from "classnames/bind"
@@ -74,22 +74,14 @@ class Register extends React.Component {
                     <FormItem hasFeedback>
                         { form.getFieldDecorator('telphone', {
                               rules: [{ required: true, message: '请填写邮箱' }, { message: '邮箱格式不正确', type: "email" }]
-                          })(<Input
-                                    onChange={ this.onChange.bind(this) }
-                                    size='large'
-                                    onPressEnter={ this.handleOk.bind(this) }
-                                    placeholder='邮箱' />) }
+                          })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='邮箱' />) }
                     </FormItem>
                     <FormItem>
                         <Row gutter={ 8 }>
                             <Col span={ 12 }>
                             { form.getFieldDecorator('code', {
                                   rules: [{ required: true, message: '请填写验证码' }]
-                              })(<Input
-                                        onChange={ this.onChange.bind(this) }
-                                        size='large'
-                                        onPressEnter={ this.handleOk.bind(this) }
-                                        placeholder='验证码' />) }
+                              })(<Input onChange={ this.onChange.bind(this) } size='large' onPressEnter={ this.handleOk.bind(this) } placeholder='验证码' />) }
                             </Col>
                             <Col span={ 12 }>
                             <Button onClick={ this.sendCode.bind(this) } disabled={ form.getFieldError("telphone") || !form.getFieldValue("telphone") || this.state.codeFreezing }>
@@ -109,11 +101,7 @@ class Register extends React.Component {
                                     placeholder='密码' />) }
                     </FormItem>
                     <Row>
-                        <Button
-                                type='primary'
-                                size='large'
-                                onClick={ this.handleOk.bind(this) }
-                                loading={ this.state.ButtonLoading }>
+                        <Button type='primary' size='large' onClick={ this.handleOk.bind(this) } loading={ this.state.ButtonLoading }>
                             注册
                         </Button>
                     </Row>
@@ -121,7 +109,8 @@ class Register extends React.Component {
                         <div className={ cx("error-msg") }>
                             { this.state.ErrorMsg }
                         </div>
-                        <a onClick={ this.props.dispatch({ type: "register", payload: false }) }>去登录</a>
+                        <Link to={ { query: { } } }> 去登录
+                        </Link>
                     </div>
                 </form>
             </div>
@@ -133,4 +122,4 @@ Register.propTypes = {
     form: PropTypes.object
 }
 
-export default connect(({app}) => app)(Form.create()(Register))
+export default connect("app")(Form.create()(Register))

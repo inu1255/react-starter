@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'dva';
+import { connect } from 'asha/libs/storage.js';
 import { Carousel } from 'antd'
 import Img from 'asha/component/image/img.js'
 
@@ -18,15 +18,12 @@ class Index extends React.Component {
     update() {
         this.state.a[0]++
         this.setState({})
+        this.props.dispatch({ type: 'app/login', payload: true })
     }
     render() {
-        console.log(this.state.a)
         return (
             <div onClick={ this.update.bind(this) } className={ styles.container }>
-                <Menu
-                      menu={ [{ icon: "cloud", to: "index", title: "网站名" }, { title: "注册", to: { pathname: "register", query: {} }, right: true }, { title: "登录", to: "login", right: true }] }
-                      theme="dark"
-                      mode="horizontal"></Menu>
+                <Menu menu={ [{ icon: "cloud", to: "index", title: "网站名" }, { title: "注册", to: { pathname: "register", query: {} }, right: true }, { title: "登录", to: "login", right: true }] } theme="dark" mode="horizontal"></Menu>
                 <Carousel autoplay>
                     <div>
                         <Img src={ banner }></Img>
@@ -49,4 +46,4 @@ class Index extends React.Component {
 Index.propTypes = {
 };
 
-export default connect(({app}) => app)(Index);
+export default connect("app")(Index);

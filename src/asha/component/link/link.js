@@ -13,6 +13,8 @@ class InuLink extends React.Component {
             to.pathname = this.props.to
         else if (typeof this.props.to == "object")
             Object.assign(to, this.props.to)
+        if (typeof this.props.query == "object")
+            Object.assign(to.query, this.props.query)
         return (
             <Link
                   activeStyle={ this.props.activeStyle }

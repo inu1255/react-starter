@@ -1,10 +1,14 @@
 import React from 'react';
-import { connect } from 'dva';
+import { connect } from 'asha/libs/storage.js';
 import styles from './app.less';
 import classnames from "classnames/bind"
+import Menu from '../components/layout/menu.js'
+import { Layout, Icon } from "antd"
+const {Header, Sider, Content} = Layout;
 const cx = classnames.bind(styles)
 
 import Login from './other/login.js'
+import Register from './other/register.js'
 
 class App extends React.Component {
     constructor(props) {
@@ -13,25 +17,29 @@ class App extends React.Component {
         this.state = {}
     }
     render() {
-        if (!this.props.login) return <Login {...a}></Login>
+        console.log("render")
+        if (!this.props.login) {
+            if (this.props.location.query.register) return <Register></Register>
+            return <Login></Login>
+        }
         return (
             <div className={ cx("app-container") }>
-              <Layout>
-                <Sider trigger={ null } collapsible collapsed={ this.state.collapsed }>
-                  <Menu menu={ this.props.sider } theme="dark" mode="inline"></Menu>
-                </Sider>
                 <Layout>
-                  <Header style={ { background: '#fff', padding: 0 } }>
-                    <Icon className="trigger" type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } onClick={ this.toggle } />
-                  </Header>
-                  <Content style={ { margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 } }>
-                    { this.props.children }
-                  </Content>
+                    <Sider trigger={ null } collapsible collapsed={ this.state.collapsed }>
+                        <Menu menu={ this.props.sider } theme="dark" mode="inline"></Menu>
+                    </Sider>
+                    <Layout>
+                        <Header style={ { background: '#fff', padding: 0 } }>
+                            <Icon className="trigger" type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } onClick={ this.toggle } />
+                        </Header>
+                        <Content style={ { margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 } }>
+                            { this.props.children }
+                        </Content>
+                    </Layout>
                 </Layout>
-              </Layout>
             </div>
         )
     }
 }
 
-export default connect(({app}) => app)(App)
+export default connect("app")(App)
