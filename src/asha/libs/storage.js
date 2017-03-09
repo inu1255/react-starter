@@ -86,10 +86,7 @@ ComponentStorage.connect = (name) => (App) => {
         },
         render() {
             return (
-                <App {...s.getData()}
-                     {...this.props}
-                     app={ map }
-                     dispatch={ s.dispatch.bind(s) }>
+                <App {...s.getData()} {...this.props} app={ map } dispatch={ s.dispatch.bind(s) }>
                     { this.props.children }
                 </App>
             )
@@ -104,6 +101,8 @@ ComponentStorage.register = function(name, app) {
         for (var k in app) {
             if (typeof app[k] == "function") {
                 s[k] = app[k].bind(s)
+            } else if (s[k] === undefined) {
+                s[k] = app[k]
             }
         }
     }
