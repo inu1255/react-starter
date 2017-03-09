@@ -6,5 +6,12 @@ export default {
         headers: {
             'content-type': 'application/json'
         }
-    }
+    },
+    siderMenu: [
+        {
+            icon: "cloud",
+            title: "网站名",
+            to: "movie"
+        }
+    ]
 }

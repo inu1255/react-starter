@@ -9,7 +9,7 @@ const cx = classnames.bind(styles)
 
 import Login from './other/login.js'
 import Register from './other/register.js'
-import siderMenu from '../storage/sidermenu.js'
+import { siderMenu } from '../utils/config.js'
 
 class App extends React.Component {
     constructor(props) {
@@ -28,18 +28,12 @@ class App extends React.Component {
         return (
             <div className={ cx("app-container") }>
                 <Layout>
-                    <Sider trigger={ null }
-                           collapsible
-                           collapsed={ this.state.collapsed }>
-                        <Menu menu={ siderMenu }
-                              theme="dark"
-                              mode="inline"></Menu>
+                    <Sider trigger={ null } collapsible collapsed={ this.state.collapsed }>
+                        <Menu menu={ siderMenu } theme="dark" mode="inline"></Menu>
                     </Sider>
                     <Layout>
                         <Header style={ { background: '#fff', padding: 0 } }>
-                            <Icon className={ cx("trigger") }
-                                  type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' }
-                                  onClick={ this.toggle.bind(this) } />
+                            <Icon className={ cx("trigger") } type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } onClick={ this.toggle.bind(this) } />
                         </Header>
                         <Content style={ { margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 } }>
                             { this.props.children }
